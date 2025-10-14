@@ -34,3 +34,5 @@ desktop.ini
 
 # Packages
 Packages/com.unity.package-manager-ui
+server/tts-env/
+server/whisper-bin/models/
