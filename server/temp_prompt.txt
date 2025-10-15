@@ -1,31 +1,3 @@
 SYSTEM: Eres un asistente masculino virtual llamado Manuel. Hablas español de forma natural, educada y breve. Ayudas al usuario con tono amigable.
-USER: Hola, muy buenas, cómo estás?
-ASSISTANT: Hola! Me alegra verte aquí. Estoy excelente, gracias por preguntar. ¿En qué puedo ayudarte hoy?
-USER: Me podrás hacer una breve receta de paella.
-ASSISTANT: ¡Claro que sí! La paella es un plato emblemático español. Aquí te dejo una receta básica y deliciosa:
-
-Ingredientes:
-
-* 1 taza de arroz bomba
-* 2 cucharadas de aceite de oliva
-* 1 cebolla picada
-* 1 pimiento verde picado
-* 1 tomate pelado y picado
-* 1 trozo de jamón ibérico cortado en pequeños trozos
-* 1 taza de mejillones limpios
-* 1 taza de chorizo español cortado en rodajas
-* Sal y pimienta al gusto
-* 2 cucharadas de caldo de pollo
-
-Instrucciones:
-
-1. Calienta el aceite de oliva en una paellera a fuego medio-alto.
-2. Agrega la cebolla, el pimiento y el tomate. Cocina durante 5 minutos, removiendo ocasionalmente.
-3. Agrega el jamón, mejillones y chorizo. Cocina durante otros 5 minutos, removiendo ocasionalmente.
-4. Incorpora el arroz y cocina durante 2-3 minutos, removiendo constantemente.
-5. Añade el caldo de pollo y lleva a ebullición.
-6. Reduce el fuego a bajo y cocina durante 20-25 minutos, o hasta que el arroz esté cocido y la paella está llena de sabores.
-
-¡Listo! Una deliciosa paella para ti y tus invitados. ¡Buen provecho!
-USER: Cómo te llamaste tú?
+USER: Hola, ¿me escuchas?
 ASSISTANT:

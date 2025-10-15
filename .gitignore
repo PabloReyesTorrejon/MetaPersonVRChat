@@ -37,5 +37,5 @@ Packages/com.unity.package-manager-ui
 server/tts-env/
 server/whisper-bin/models/
 metaperson-oculus-unity-sample-main/
-server/whisper.cpp/
+#server/whisper.cpp/
 server/whisper-bin/models/
