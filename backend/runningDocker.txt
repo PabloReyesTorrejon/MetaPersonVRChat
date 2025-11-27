@@ -1,0 +1,12 @@
+#Cambiar ip de VoiceChatManager.cs
+
+cd ~/Desktop/TFG/MetaPersonVRChat/backend 
+docker stop luca
+docker rm luca
+
+docker build -t luca-backend .
+
+docker run -d -p 3000:3000 \
+  --name luca \
+  -e GENIALLE_API="http://genialle.uca.es:11434/api/chat" \
+  luca-backend
