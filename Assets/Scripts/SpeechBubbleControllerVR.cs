@@ -191,5 +191,30 @@ private IEnumerator ThinkingLoop()
         thinkingCoroutine = null;
     }
 
+    /// <summary>
+    /// Establece texto inmediato (sin tecleado ni bucles) y detiene cualquier 'thinking'.
+    /// </summary>
+    public void SetImmediateText(string message)
+    {
+        if (textUI == null) return;
+
+        // Detener coroutines existentes
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+        if (thinkingCoroutine != null)
+        {
+            StopCoroutine(thinkingCoroutine);
+            thinkingCoroutine = null;
+        }
+
+        textUI.text = message ?? "";
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textUI.rectTransform);
+        UpdateScrollLimits();
+        ScrollToTopImmediate();
+    }
+
 
 }
