@@ -1,0 +1,26 @@
+# Ignorar node_modules locales
+node_modules/
+
+# Ignorar uploads locales
+uploads/
+
+# Ignorar Whisper locales si reaparecen
+whisper/
+whisper.cpp/
+whisper-bin/
+whisper-cpp/
+whisper.cpp/build/
+whisper.cpp/models/
+
+# Cosas grandes que rompen el build
+*.bin
+*.so
+*.exe
+*.dll
+
+# Archivos de Unity que puedan colarse
+*.meta
+Library/
+Temp/
+Obj/
+Build/
