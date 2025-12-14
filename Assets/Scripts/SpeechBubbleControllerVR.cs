@@ -33,16 +33,18 @@ public class SpeechBubbleControllerVR : MonoBehaviour
         [Tooltip("Si true, el icono será hijo directo del GameObject del bocadillo y se compensará su escala inversa para ser visible en world-space")]
         public bool placeIconAsBubbleChild = true;
 
-        [Tooltip("Si true, usa la posición local manual para el icono en vez de calcular anclajes automáticos (útil si conoces la posición exacta)")]
-        public bool useManualLocalPosition = false;
+    [Tooltip("Si true, usa la posición local manual para el icono en vez de calcular anclajes automáticos (útil si conoces la posición exacta)")]
+    public bool useManualLocalPosition = true;
 
-        [Tooltip("Posición local a usar cuando useManualLocalPosition = true (unidades en local space del bocadillo)")]
-        public Vector3 manualLocalPosition = new Vector3(-0.0780000016f, -0.182999998f, 0.0850000009f);
+    [Tooltip("Posición local a usar cuando useManualLocalPosition = true (unidades en local space del bocadillo)")]
+    // Ajustado: x = -0.0989999995, mantengo y por defecto y = -0.182999998, z = 0.0500000007
+    public Vector3 manualLocalPosition = new Vector3(-0.0989999995f, -0.182999998f, 0.0500000007f);
 
         [Tooltip("Rotación local a aplicar al icono cuando se parenta al bocadillo (grados)")]
         public Vector3 manualLocalEuler = Vector3.zero;
 
-    [Header("Parámetros")]
+    [Tooltip("Desplazamiento adicional en Z (local) aplicado sobre `manualLocalPosition.z` para situar el icono delante del panel. Valores negativos acercan al camera.")]
+    public float manualLocalZOffset = -1.0f;    [Header("Parámetros")]
     public float typingSpeed = 0.015f;
     public float verticalScrollSpeed = 200f;
     public bool autoScrollToTopWhenFinished = true; // <-- si true, tras terminar escribe, ajusta al inicio
@@ -330,10 +332,33 @@ private IEnumerator ThinkingLoop()
             float compensation = (1f / maxScale) * muteIconWorldScale * muteIconScaleMultiplier;
             iconRect.localScale = Vector3.one * compensation;
 
+            // Añadir un Canvas con overrideSorting PRIMERO para forzar que el icono se dibuje encima
+            Canvas iconCanvas = muteIcon.GetComponent<Canvas>();
+            if (iconCanvas == null)
+            {
+                iconCanvas = muteIcon.gameObject.AddComponent<Canvas>();
+            }
+            iconCanvas.overrideSorting = true;
+            iconCanvas.sortingOrder = 32767; // valor MÁXIMO posible (short.MaxValue)
+            
+            // Forzar el material a ser UI/Default para evitar problemas de z-buffer
+            if (muteIcon.material == null || muteIcon.material.name != "UI/Default")
+            {
+                muteIcon.material = null; // Fuerza uso del material por defecto de UI
+            }
+
+            // Opcional: prevenir que el icono capture eventos si no se desea
+            var gr = muteIcon.GetComponent<UnityEngine.UI.GraphicRaycaster>();
+            if (gr != null) DestroyImmediate(gr);
+
             // Posición: manual o offset en píxeles desde la esquina inferior derecha
             if (useManualLocalPosition)
             {
-                iconRect.localPosition = manualLocalPosition;
+                // Aplicar manualLocalPosition pero con un pequeño offset en Z para asegurarnos
+                // de que el icono quede delante del panel (puedes ajustar manualLocalZOffset en el Inspector)
+                Vector3 mp = manualLocalPosition;
+                mp.z = mp.z + manualLocalZOffset;
+                iconRect.localPosition = mp;
                 iconRect.localEulerAngles = manualLocalEuler;
             }
             else
@@ -344,7 +369,16 @@ private IEnumerator ThinkingLoop()
 
             // Mostrar/ocultar y asegurar que está al frente
             muteIcon.gameObject.SetActive(show);
+            // Intentar asegurar orden de render por jerarquía
             muteIcon.transform.SetAsLastSibling();
+
+            // Ajuste pequeño en Z para evitar quedar 'detrás' en canvases world-space
+            // NOTA: no sobrescribimos la posición manual si el usuario pidió posición manual.
+            if (!useManualLocalPosition)
+            {
+                Vector3 lp = iconRect.localPosition;
+                iconRect.localPosition = new Vector3(lp.x, lp.y, -0.001f);
+            }
         }
         else
         {

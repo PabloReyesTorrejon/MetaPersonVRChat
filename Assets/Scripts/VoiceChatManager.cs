@@ -36,6 +36,9 @@ public class VoiceChatManager : MonoBehaviour
     [Header("Controlador de visemas (sprites de boca)")]
     public VisemePlayer visemePlayer;   // 👈 AÑADIDO
 
+    [Header("Lip Sync FFT basado en audio")]
+    public RealTimeSpanishPhonemeLipSyncSmooth realTimeLipSync;
+
     public void SendAudio(float[] samples, int sampleRate)
     {
         StartCoroutine(SendAudioCoroutine(samples, sampleRate));
@@ -87,6 +90,81 @@ public class VoiceChatManager : MonoBehaviour
             }
         }
         Debug.Log($"VoiceChatManager: isMuted = {isMuted}");
+    }
+
+    /// <summary>
+    /// Reproduce un mensaje de saludo predefinido usando TTS
+    /// </summary>
+    public void PlayGreeting(string greetingText = "en qué te puedo ayudar?")
+    {
+        StartCoroutine(PlayGreetingCoroutine(greetingText));
+    }
+
+    private IEnumerator PlayGreetingCoroutine(string greetingText)
+    {
+        // Mostrar el texto en el bocadillo
+        if (speechBubble != null)
+        {
+            var bubbleVR = speechBubble.GetComponent<SpeechBubbleControllerVR>();
+            if (bubbleVR != null)
+            {
+                bubbleVR.ShowText(greetingText);
+            }
+        }
+
+        // NO activar lip-sync de texto aquí, dejar que RealTimeSpanishPhonemeLipSync maneje el audio
+        // if (visemePlayer != null)
+        // {
+        //     visemePlayer.PlayText(greetingText);
+        // }
+
+        // Crear solicitud al backend solo para obtener el TTS
+        var ttsRequest = new
+        {
+            text = greetingText,
+            tts_only = true
+        };
+
+        string jsonPayload = JsonUtility.ToJson(ttsRequest);
+
+        using (UnityWebRequest www = new UnityWebRequest("https://adan-cofferlike-cris.ngrok-free.dev/api/tts", "POST"))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
+            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                string responseText = www.downloadHandler.text;
+                AudioResponse json = null;
+                
+                try
+                {
+                    json = JsonUtility.FromJson<AudioResponse>(responseText);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error al parsear respuesta TTS: " + ex.Message);
+                    yield break;
+                }
+
+                if (json != null && !string.IsNullOrEmpty(json.audio))
+                {
+                    // Reproducir el audio TTS - RealTimeSpanishPhonemeLipSync lo detectará automáticamente
+                    yield return StartCoroutine(PlayBase64Audio(json.audio));
+                }
+            }
+            else
+            {
+                Debug.LogError("Error en solicitud TTS: " + www.error);
+            }
+        }
+
+        // Esperar un momento antes de finalizar
+        yield return new WaitForSeconds(1f);
     }
 
     // Note: previously used to clear quick messages; removed to avoid overwriting assistant text.
@@ -148,11 +226,12 @@ public class VoiceChatManager : MonoBehaviour
             }
         }
 
-        // 👄 ACTIVAR LIPSYNC POR TEXTO
-        if (visemePlayer != null && !string.IsNullOrEmpty(json.text))
-        {
-            visemePlayer.PlayText(json.text);  // 👈 AÑADIDO
-        }
+        // 👄 NO activar lip-sync de texto aquí - dejar que RealTimeSpanishPhonemeLipSync 
+        //    maneje el lip-sync basado en el audio para mejor sincronización
+        // if (visemePlayer != null && !string.IsNullOrEmpty(json.text))
+        // {
+        //     visemePlayer.PlayText(json.text);
+        // }
 
         // 🔊 Reproducir audio si está disponible
         if (!string.IsNullOrEmpty(json.audio))
@@ -194,6 +273,16 @@ public class VoiceChatManager : MonoBehaviour
                 AudioClip clip = DownloadHandlerAudioClip.GetContent(uwr);
                 audioSource.clip = clip;
                 audioSource.Play();
+
+                // Esperar a que termine de reproducirse el audio
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                // Forzar reset del sprite de la boca a "rest" (sonrisa)
+                if (realTimeLipSync != null && realTimeLipSync.mouthRenderer != null && realTimeLipSync.rest != null)
+                {
+                    realTimeLipSync.mouthRenderer.sprite = realTimeLipSync.rest;
+                    Debug.Log("🙂 Boca reseteada a sprite 'rest' (sonrisa)");
+                }
             }
         }
 

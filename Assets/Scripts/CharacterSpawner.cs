@@ -1,10 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class CharacterSpawner : MonoBehaviour
 {
     public GameObject[] characters;
     public Transform spawnPoint;
     const string PLAYERPREF_KEY = "SelectedCharacter";
+
+    [Header("Saludo inicial")]
+    public VoiceChatManager voiceChatManager;
+    public float greetingDelay = 1.0f;
 
     void Start()
     {
@@ -49,6 +54,23 @@ public class CharacterSpawner : MonoBehaviour
 
             var animators = go.GetComponentsInChildren<Animator>(true);
             foreach (var a in animators) a.enabled = shouldBeActive;
+        }
+
+        // Reproducir saludo inicial después de un pequeño delay
+        StartCoroutine(PlayGreetingAfterDelay());
+    }
+
+    IEnumerator PlayGreetingAfterDelay()
+    {
+        yield return new WaitForSeconds(greetingDelay);
+
+        if (voiceChatManager != null)
+        {
+            voiceChatManager.PlayGreeting("en qué te puedo ayudar?");
+        }
+        else
+        {
+            Debug.LogWarning("CharacterSpawner: VoiceChatManager no asignado. No se puede reproducir el saludo.");
         }
     }
 }
