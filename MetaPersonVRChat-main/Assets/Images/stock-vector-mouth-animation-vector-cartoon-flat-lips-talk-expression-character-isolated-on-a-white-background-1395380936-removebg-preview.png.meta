@@ -1,0 +1,894 @@
+fileFormatVersion: 2
+guid: d04f12967221f6548be146e59ce75be4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: VisionOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 276
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 643d0373a1930f24397ebd1b297ac92e
+      internalID: 1006998585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 264
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42e5c5a81b37e9a469cf197da0b8d218
+      internalID: 503062593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 269
+        width: 30
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac842b55f7cc0c24c998d5bb92111e21
+      internalID: -1764766488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 276
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316167672a31b59439eab07022977313
+      internalID: 391086584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 264
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2e2eb3c2941bfe49ae45413a9d3758f
+      internalID: -1946267741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 217
+        width: 59
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93cec0d3fef42ce4f939c1d02fe376ce
+      internalID: 89579403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 213
+        width: 37
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55503ebd0c028354eaee91874146f0ac
+      internalID: 1972460739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 260
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d16722e4c940b3748b85c0fff2e35299
+      internalID: 1106114282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 222
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82de64aed6a46842ac19b1029097436
+      internalID: -9607903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 252
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85338fb947ee24840ae5418ac7145d52
+      internalID: -702809232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 221
+        width: 63
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e98d8b07e7778b7499630feee9bf6138
+      internalID: -1552039533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 222
+        width: 60
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79729a56cbb112b47971d98544f510e6
+      internalID: -1254334008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 221
+        width: 57
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf5e0b018a6bae342ba9fb9846b26d43
+      internalID: 1667092490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 222
+        width: 61
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 676deb3125538804991d370326a4431c
+      internalID: -154850045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 242
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7953efa864829647b7dccac5ed22712
+      internalID: 1754207655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 244
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c864cb81e9ba68449a478cfca45f65e
+      internalID: 242866340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_16
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 223
+        width: 56
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e401b157e65110e4fbf40b80791dce0c
+      internalID: 1059006540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_17
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 230
+        width: 36
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38128efa86bcbf1479f1933914166df1
+      internalID: 1007432773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 210
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e82be7d9dfd8cb64e9b1bbba919c2b15
+      internalID: 1253494404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_19
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 210
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b0660297f66d0b41863eea15425f280
+      internalID: -655703081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_20
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 198
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6b2603243098c46bc26c052ff8c112
+      internalID: -1538068499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_21
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 198
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3fc2d962753c2944b69929ac42dfd63
+      internalID: -1166892932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_22
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 204
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 125428466654d3240aed2d39246a1665
+      internalID: 1109341153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_23
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 165
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39cc5b95946ebda4997c47ddb1461de7
+      internalID: 1056225704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_24
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 165
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36de764c4922026499c0cca06f454cb5
+      internalID: -750347552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_25
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 162
+        width: 9
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ae6cd065e898c844abe738d4aef7537
+      internalID: 1304848175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_26
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 162
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d4185910cb85574aa64bdb44b52555c
+      internalID: -189171261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_27
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 165
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72d74785db4bd10498aa71001cabd29a
+      internalID: -559666790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_28
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 165
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 713c78983def88741af763dac0d9766d
+      internalID: -896624919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_29
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 165
+        width: 10
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b87a7dd4d00e2b4fa2b8f89b03dc8fe
+      internalID: 941087395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_30
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 162
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f50b10ee21e6343b30c5e34433b856
+      internalID: 1696621619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_31
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 164
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd292f655fa9624da5054677552e5b6
+      internalID: 254682289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 01810c7555ecb6c46b73feae83e3f2cf
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_0: 1006998585
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_1: 503062593
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_10: -1552039533
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_11: -1254334008
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_12: 1667092490
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_13: -154850045
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_14: 1754207655
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_15: 242866340
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_16: 1059006540
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_17: 1007432773
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_18: 1253494404
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_19: -655703081
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_2: -1764766488
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_20: -1538068499
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_21: -1166892932
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_22: 1109341153
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_23: 1056225704
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_24: -750347552
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_25: 1304848175
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_26: -189171261
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_27: -559666790
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_28: -896624919
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_29: 941087395
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_3: 391086584
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_30: 1696621619
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_31: 254682289
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_4: -1946267741
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_5: 89579403
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_6: 1972460739
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_7: 1106114282
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_8: -9607903
+      stock-vector-mouth-animation-vector-cartoon-flat-lips-talk-expression-character-isolated-on-a-white-background-1395380936-removebg-preview_9: -702809232
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

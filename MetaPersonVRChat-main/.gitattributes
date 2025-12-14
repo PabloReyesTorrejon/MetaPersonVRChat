@@ -1,0 +1,4 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+backend/whisper-bin/models/ggml-base.bin filter=lfs diff=lfs merge=lfs -text
+backend/**/ggml-base.bin filter=lfs diff=lfs merge=lfs -text
