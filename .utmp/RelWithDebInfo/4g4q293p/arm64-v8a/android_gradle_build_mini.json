@@ -1,0 +1,35 @@
+{
+  "buildFiles": [
+    "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt",
+    "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing/CMakeLists.txt",
+    "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Applications/Unity/Hub/Editor/6000.2.6f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/.utmp/RelWithDebInfo/4g4q293p/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Applications/Unity/Hub/Editor/6000.2.6f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/.utmp/RelWithDebInfo/4g4q293p/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "game::@d02bb112ea9f9c2ed29f": {
+      "artifactName": "game",
+      "abi": "arm64-v8a",
+      "output": "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g4q293p/obj/arm64-v8a/libgame.so",
+      "runtimeFiles": []
+    },
+    "swappywrapper::@7e25bd1f32ce224db4e9": {
+      "artifactName": "swappywrapper",
+      "abi": "arm64-v8a",
+      "output": "/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g4q293p/obj/arm64-v8a/libswappywrapper.so",
+      "runtimeFiles": []
+    }
+  }
+}
