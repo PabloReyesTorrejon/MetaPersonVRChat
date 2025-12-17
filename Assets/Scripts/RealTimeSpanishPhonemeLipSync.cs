@@ -21,6 +21,10 @@ public class RealTimeSpanishPhonemeLipSyncSmooth : MonoBehaviour
     [Header("Smoothing")]
     public float smoothFactor = 0.25f;            // FFT smoothing
     public float spriteChangeDelay = 0.08f;       // seconds min between sprite changes
+    
+    [Header("Silence detection")]
+    [Tooltip("Si la energía total cae por debajo de este umbral, se vuelve inmediatamente al sprite 'rest'.")]
+    public float silenceThreshold = 0.005f;
 
     float smLow, smMid, smHigh, smBurst;
     float timeSinceLastChange = 0f;
@@ -56,6 +60,21 @@ public class RealTimeSpanishPhonemeLipSyncSmooth : MonoBehaviour
         smMid = Mathf.Lerp(smMid, mid, smoothFactor);
         smHigh = Mathf.Lerp(smHigh, high, smoothFactor);
         smBurst = Mathf.Lerp(smBurst, burst, smoothFactor);
+
+        // Si la energía total es muy baja, consideramos silencio y forzamos 'rest'
+        float totalEnergy = smLow + smMid + smHigh + smBurst;
+        if (totalEnergy < silenceThreshold)
+        {
+            if (lastSprite != rest)
+            {
+                lastSprite = rest;
+                mouthRenderer.sprite = rest;
+                // reset smoothing para evitar 'ghosting'
+                smLow = smMid = smHigh = smBurst = 0f;
+                timeSinceLastChange = 0f;
+            }
+            return;
+        }
 
         Sprite chosen = DetermineSprite(smLow, smMid, smHigh, smBurst);
 

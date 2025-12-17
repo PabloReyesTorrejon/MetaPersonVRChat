@@ -17,9 +17,24 @@ public class AudioResponse
     public string audio; // base64 del audio (puede ser mp3 o wav)
 }
 
+[Serializable]
+public class TtsRequest
+{
+    public string text;
+}
+
 public class VoiceChatManager : MonoBehaviour
 {
     public AudioSource audioSource;
+    [Tooltip("Si true, el audio TTS estará silenciado")]
+    public bool isMuted = false;
+
+    [Header("Configuración de entrada para silenciar")]
+    [Tooltip("Si true, se escuchará también la entrada OVRInput para toggle (mando Quest). Si false, sólo teclado.)")]
+    public bool useOVRInput = true;
+
+    [Tooltip("Botón OVR que alterna mute (por defecto: Button.Four — ajusta en el inspector si hace falta)")]
+    public OVRInput.Button muteOVRButton = OVRInput.Button.Four;
 
     [Header("Referencia al panel del bocadillo de texto")]
     public GameObject speechBubble;
@@ -27,10 +42,168 @@ public class VoiceChatManager : MonoBehaviour
     [Header("Controlador de visemas (sprites de boca)")]
     public VisemePlayer visemePlayer;   // 👈 AÑADIDO
 
+    [Header("Lip Sync FFT basado en audio")]
+    public RealTimeSpanishPhonemeLipSyncSmooth realTimeLipSync;
+    
+    [Header("TTS endpoint")]
+    [Tooltip("URL del endpoint /api/tts. Si está vacío se intentará un fallback a http://127.0.0.1:3000/api/tts")]
+    public string ttsEndpoint = "https://adan-cofferlike-cris.ngrok-free.dev/api/tts";
+    
+    // No usar clips locales para el saludo por defecto: el TTS proviene del servidor gTTS.
+
     public void SendAudio(float[] samples, int sampleRate)
     {
         StartCoroutine(SendAudioCoroutine(samples, sampleRate));
     }
+
+    void Update()
+    {
+        // Toggle mute con botón Y del mando o con la tecla Y del teclado (útil en editor)
+        bool pressed = false;
+        if (useOVRInput)
+        {
+            if (OVRInput.GetDown(muteOVRButton)) pressed = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y)) pressed = true;
+
+        if (pressed)
+        {
+            ToggleMute();
+        }
+    }
+
+    /// <summary>
+    /// Alterna el estado de silencio del TTS (mute/unmute)
+    /// </summary>
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        if (audioSource != null)
+            audioSource.mute = isMuted;
+
+        // Mostrar/ocultar icono de silenciado en el bocadillo (no modificar el texto)
+        if (speechBubble != null)
+        {
+            var bubbleVR = speechBubble.GetComponent<SpeechBubbleControllerVR>();
+            if (bubbleVR != null)
+            {
+                bubbleVR.ShowMuteIcon(true, isMuted);
+            }
+            else
+            {
+                var bubbleOld = speechBubble.GetComponent<SpeechBubble>();
+                if (bubbleOld != null)
+                {
+                    // Si el bocadillo antiguo no soporta icono, podríamos mostrar un log o
+                    // implementar una mecánica alternativa. Por ahora sólo logueamos.
+                    Debug.Log("VoiceChatManager: cambio mute, pero SpeechBubble antiguo no soporta icono.");
+                }
+            }
+        }
+        Debug.Log($"VoiceChatManager: isMuted = {isMuted}");
+    }
+
+    /// <summary>
+    /// Reproduce un mensaje de saludo predefinido usando TTS
+    /// </summary>
+    public void PlayGreeting(string greetingText = "en qué te puedo ayudar?")
+    {
+        StartCoroutine(PlayGreetingCoroutine(greetingText));
+    }
+
+    private IEnumerator PlayGreetingCoroutine(string greetingText)
+    {
+        // Mostrar el texto en el bocadillo
+        if (speechBubble != null)
+        {
+            var bubbleVR = speechBubble.GetComponent<SpeechBubbleControllerVR>();
+            if (bubbleVR != null)
+            {
+                bubbleVR.ShowText(greetingText);
+            }
+        }
+
+        // Crear solicitud al backend solo para obtener el TTS
+        TtsRequest ttsRequest = new TtsRequest { text = greetingText };
+        string jsonPayload = JsonUtility.ToJson(ttsRequest);
+
+        string primaryUrl = string.IsNullOrEmpty(ttsEndpoint) ? "" : ttsEndpoint;
+        string fallbackUrl = "http://127.0.0.1:3000/api/tts";
+
+        string[] tryUrls = string.IsNullOrEmpty(primaryUrl) ? new string[] { fallbackUrl } : new string[] { primaryUrl, fallbackUrl };
+
+        UnityWebRequest www = null;
+        string responseText = null;
+
+        Debug.Log("VoiceChatManager: PlayGreeting -> solicitando TTS para: '" + greetingText + "'. URLs: " + string.Join(",", tryUrls));
+
+        foreach (var url in tryUrls)
+        {
+            using (UnityWebRequest uw = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyRaw2 = Encoding.UTF8.GetBytes(jsonPayload);
+                uw.uploadHandler = new UploadHandlerRaw(bodyRaw2);
+                uw.downloadHandler = new DownloadHandlerBuffer();
+                uw.SetRequestHeader("Content-Type", "application/json");
+
+                Debug.Log("VoiceChatManager: intentando TTS en: " + url);
+                yield return uw.SendWebRequest();
+
+                if (uw.result == UnityWebRequest.Result.Success)
+                {
+                    responseText = uw.downloadHandler.text;
+                    Debug.Log("VoiceChatManager: respuesta TTS recibida (len=" + (responseText?.Length ?? 0) + ")");
+                    www = uw; // assign for later parsing (we'll parse responseText)
+                    break;
+                }
+                else
+                {
+                    string serverText = null;
+                    try { serverText = uw.downloadHandler?.text; } catch { }
+                    Debug.LogWarning($"VoiceChatManager: fallo petición TTS a {url}: {uw.error} -- respuesta: " + (serverText ?? "<vacío>"));
+                }
+            }
+        }
+        if (string.IsNullOrEmpty(responseText))
+        {
+            Debug.LogError("VoiceChatManager: No se pudo obtener respuesta TTS desde ninguna URL. Asegúrate de que el servidor /api/tts está accesible y genera audio.");
+            // No reproducir clips locales: confiar únicamente en el gTTS del servidor.
+            yield break;
+        }
+
+        AudioResponse json = null;
+        try
+        {
+            json = JsonUtility.FromJson<AudioResponse>(responseText);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error al parsear respuesta TTS: " + ex.Message + " -- respuesta: " + responseText);
+            yield break;
+        }
+
+        if (json == null)
+        {
+            Debug.LogError("VoiceChatManager: parseo JSON TTS produjo null. responseText=" + responseText);
+            yield break;
+        }
+
+        if (json != null && !string.IsNullOrEmpty(json.audio))
+        {
+            // Reproducir el audio TTS
+            yield return StartCoroutine(PlayBase64Audio(json.audio));
+        }
+        else
+        {
+            Debug.LogWarning("VoiceChatManager: la respuesta TTS no contiene campo 'audio'. response.text=" + json.text + ". No se reproducirá audio local; revisa el servidor gTTS.");
+        }
+
+        // Esperar un momento antes de finalizar
+        yield return new WaitForSeconds(1f);
+    }
+
+    // Note: previously used to clear quick messages; removed to avoid overwriting assistant text.
 
     private IEnumerator SendAudioCoroutine(float[] samples, int sampleRate)
     {
@@ -42,6 +215,14 @@ public class VoiceChatManager : MonoBehaviour
         AudioRequest request = new AudioRequest { audio = base64Audio };
         string jsonData = JsonUtility.ToJson(request);
 
+        // Mostrar mensajes de "pensando..."
+        if (speechBubble != null)
+        {
+            var bubbleVR = speechBubble.GetComponent<SpeechBubbleControllerVR>();
+            if (bubbleVR != null)
+                bubbleVR.ShowThinking();
+        }   
+
         //192.168.1.67
         //
         UnityWebRequest www = new UnityWebRequest("https://adan-cofferlike-cris.ngrok-free.dev/api/audio", "POST");
@@ -51,13 +232,11 @@ public class VoiceChatManager : MonoBehaviour
 
         yield return www.SendWebRequest();
 
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError("❌ Error al enviar audio: " + www.error);
-            Debug.LogError("Respuesta del servidor: " + www.downloadHandler.text);
-            yield break;
-        }
-
+        // Detener "pensando..." cuando llega respuesta
+        var bubbleVRthinking = speechBubble.GetComponent<SpeechBubbleControllerVR>();
+        if (bubbleVRthinking != null)
+            bubbleVRthinking.StopThinking();    
+    
         AudioResponse json = null;
         try
         {
@@ -83,11 +262,12 @@ public class VoiceChatManager : MonoBehaviour
             }
         }
 
-        // 👄 ACTIVAR LIPSYNC POR TEXTO
-        if (visemePlayer != null && !string.IsNullOrEmpty(json.text))
-        {
-            visemePlayer.PlayText(json.text);  // 👈 AÑADIDO
-        }
+        // 👄 NO activar lip-sync de texto aquí - dejar que RealTimeSpanishPhonemeLipSync 
+        //    maneje el lip-sync basado en el audio para mejor sincronización
+        // if (visemePlayer != null && !string.IsNullOrEmpty(json.text))
+        // {
+        //     visemePlayer.PlayText(json.text);
+        // }
 
         // 🔊 Reproducir audio si está disponible
         if (!string.IsNullOrEmpty(json.audio))
@@ -104,8 +284,23 @@ public class VoiceChatManager : MonoBehaviour
     // ==============================
     private IEnumerator PlayBase64Audio(string base64Audio)
     {
+        if (audioSource == null)
+        {
+            Debug.LogError("VoiceChatManager: audioSource no está asignado. Asigna un AudioSource en el Inspector.");
+            yield break;
+        }
+
         string tempPath = System.IO.Path.Combine(Application.persistentDataPath, "respuesta_audio.mp3");
-        byte[] audioBytes = Convert.FromBase64String(base64Audio);
+        byte[] audioBytes = null;
+        try
+        {
+            audioBytes = Convert.FromBase64String(base64Audio);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("VoiceChatManager: error decoding base64 audio: " + ex.Message + "\nprimeros 200 chars: " + (base64Audio?.Substring(0, Math.Min(200, base64Audio.Length)) ?? "<null>"));
+            yield break;
+        }
 
         try
         {
@@ -129,6 +324,17 @@ public class VoiceChatManager : MonoBehaviour
                 AudioClip clip = DownloadHandlerAudioClip.GetContent(uwr);
                 audioSource.clip = clip;
                 audioSource.Play();
+                Debug.Log("VoiceChatManager: reproducción TTS iniciada, duración: " + clip.length + "s");
+
+                // Esperar a que termine de reproducirse el audio
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                // Forzar reset del sprite de la boca a "rest" (sonrisa)
+                if (realTimeLipSync != null && realTimeLipSync.mouthRenderer != null && realTimeLipSync.rest != null)
+                {
+                    realTimeLipSync.mouthRenderer.sprite = realTimeLipSync.rest;
+                    Debug.Log("🙂 Boca reseteada a sprite 'rest' (sonrisa)");
+                }
             }
         }
 

@@ -34,7 +34,22 @@ public class QuestMicRecorder : MonoBehaviour
         {
             recording = Microphone.Start(micDevice, false, 10, 16000);
             Debug.Log("Grabando...");
-            //if (activeBubble) activeBubble.SetText("🎙 Grabando...");
+            // Mostrar texto inmediato en la burbuja (si está asignada en VoiceChatManager)
+            if (voiceChatManager != null && voiceChatManager.speechBubble != null)
+            {
+                var bubbleObj = voiceChatManager.speechBubble;
+                var bubbleVR = bubbleObj.GetComponent<SpeechBubbleControllerVR>();
+                if (bubbleVR != null)
+                {
+                    bubbleVR.SetImmediateText("🎙 Grabando...");
+                }
+                else
+                {
+                    var bubbleOld = bubbleObj.GetComponent<SpeechBubble>();
+                    if (bubbleOld != null)
+                        bubbleOld.SetText("🎙 Grabando...");
+                }
+            }
         }
     }
 

@@ -45,3 +45,4 @@ backend/whisper-bin/models/ggml-base.bin
 pruebas_rendimiento/
 *.env
 
+backend/node_modules/
