@@ -1,0 +1,8 @@
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/GameActivity/CMakeFiles/game.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-push-files-20251217231654/.utmp/RelWithDebInfo/5c4u722k/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

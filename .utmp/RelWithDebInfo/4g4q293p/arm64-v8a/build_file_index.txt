@@ -1,0 +1,3 @@
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing/CMakeLists.txt
+/Users/pabloreyestorrejon/Desktop/TFG/MetaPersonVRChat-feature-mute-tts-20251203_1764797820/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/CMakeLists.txt
