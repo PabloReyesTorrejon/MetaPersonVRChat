@@ -101,8 +101,9 @@ public class SpeechBubbleControllerVR : MonoBehaviour, IPointerClickHandler
         // Escucha el botón configurable para alternar el canvas manual de mute
         if (useManualMuteCanvas)
         {
-            // Detectar el botón configurado (OVR) en cualquier mando o la tecla Y en editor
-            if (OVRInput.GetDown(manualToggleButton) || Input.GetKeyDown(KeyCode.Y))
+            // Detectar el botón Y del mando izquierdo (Meta Quest) o la tecla Y en editor.
+            // Usamos el botón Two en el controlador izquierdo que corresponde a 'Y' en Touch
+            if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch) || Input.GetKeyDown(KeyCode.Y))
             {
                 ToggleMuteManual();
             }
