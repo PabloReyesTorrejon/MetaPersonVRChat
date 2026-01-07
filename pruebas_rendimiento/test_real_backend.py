@@ -2,9 +2,15 @@
 Script de pruebas de rendimiento REAL contra el backend server.js.
 Mide tiempos reales de Whisper (transcripción) + Genialle (LLM) + TTS.
 
+Requisitos:
+    1. Backend ejecutándose: cd backend && docker-compose up
+    2. Archivos de audio en backend/uploads/entrada_*.wav
+    3. Dependencies: pip install -r requirements.txt
+
 Uso:
     python test_real_backend.py -n 10
     python test_real_backend.py -n 5 --backend-url https://tu-ngrok.ngrok-free.dev
+    python test_real_backend.py -n 20 --output results_20250107.csv
 """
 
 import os
@@ -17,10 +23,22 @@ import base64
 import numpy as np
 from pathlib import Path
 from datetime import datetime
+from audio_utils import get_latest_audio_file, get_audio_info, get_user_transcription_examples
 
 OUTPUT_DIR = Path(__file__).parent
 RESULTS_FILE = OUTPUT_DIR / "performance_results_real_backend.csv"
 BACKEND_UPLOAD_DIR = OUTPUT_DIR.parent / "backend" / "uploads"
+
+# Colores para terminal (opcional)
+try:
+    from colorama import init, Fore, Style
+    init()
+    COLOR_SUCCESS = Fore.GREEN
+    COLOR_ERROR = Fore.RED
+    COLOR_INFO = Fore.CYAN
+    COLOR_RESET = Style.RESET_ALL
+except ImportError:
+    COLOR_SUCCESS = COLOR_ERROR = COLOR_INFO = COLOR_RESET = ""
 
 
 def load_audio_as_base64(audio_path):
@@ -81,102 +99,237 @@ def send_audio_to_backend(audio_base64, backend_url):
         return {'success': False, 'error': str(e)}
 
 
-def run_real_backend_test(num_iterations=10, backend_url="http://localhost:3000"):
+def run_real_backend_test(num_iterations=10, backend_url="http://localhost:3000", verbose=True):
     """Ejecuta pruebas contra el backend REAL"""
     results = []
     
-    print(f"\n{'='*70}")
-    print(f"PRUEBAS DE RENDIMIENTO REAL - Backend server.js")
-    print(f"{'='*70}\n")
+    if verbose:
+        print(f"\n{'='*70}")
+        print(f"PRUEBAS DE RENDIMIENTO REAL - Backend server.js")
+        print(f"{'='*70}\n")
     
-    uploads_dir = BACKEND_UPLOAD_DIR
-    if not uploads_dir.exists():
-        print(f"❌ No se encuentra: {uploads_dir}")
+    # Usar audio_utils para obtener archivo
+    test_audio_path = get_latest_audio_file()
+    
+    if not test_audio_path:
+        print(f"{COLOR_ERROR}❌ No hay archivos entrada_*.wav en backend/uploads{COLOR_RESET}")
         return []
     
-    wav_files = list(uploads_dir.glob("entrada_*.wav"))
-    if not wav_files:
-        print(f"❌ No hay archivos entrada_*.wav en {uploads_dir}")
-        return []
-    
-    test_audio_path = sorted(wav_files, key=lambda x: x.stat().st_mtime)[-1]
-    print(f"✓ Usando audio: {test_audio_path.name}")
+    audio_info = get_audio_info(test_audio_path)
+    if verbose:
+        print(f"[1/3] Archivo de audio REAL del usuario")
+        print(f"      ✓ Archivo: {audio_info['name']}")
+        print(f"      ✓ Tamaño: {audio_info['size_kb']:.1f} KB")
+        print(f"      ✓ Ruta: {audio_info['path']}\n")
     
     audio_b64 = load_audio_as_base64(test_audio_path)
     if not audio_b64:
         return []
     
+    if verbose:
+        print(f"[2/3] Audio cargado en memoria ({len(audio_b64)} caracteres base64)\n")
+        print(f"[3/3] Ejecutando {num_iterations} iteraciones contra {backend_url}\n")
+        print(f"{'='*70}\n")
+    
     successful_tests = 0
+    failed_tests = 0
     
     for iteration in range(1, num_iterations + 1):
-        print(f"\n[Iteración {iteration}/{num_iterations}]")
+        if verbose:
+            print(f"[Iteración {iteration}/{num_iterations}]")
         
         backend_result = send_audio_to_backend(audio_b64, backend_url)
         
         if not backend_result['success']:
-            print(f"  ❌ Error: {backend_result.get('error')}")
+            failed_tests += 1
+            if verbose:
+                print(f"  {COLOR_ERROR}❌ Error: {backend_result.get('error')}{COLOR_RESET}\n")
+            
+            results.append({
+                "iteration": iteration,
+                "timestamp": datetime.now().isoformat(),
+                "success": False,
+                "error": backend_result.get('error', 'Unknown')
+            })
             continue
         
         successful_tests += 1
         
-        print(f"  ✓ Total: {backend_result['total_time_ms']:.1f} ms")
-        print(f"    - Whisper:  {backend_result['stt_time_ms']:.1f} ms")
-        print(f"    - Genialle: {backend_result['llm_time_ms']:.1f} ms")
-        print(f"    - TTS:      {backend_result['tts_time_ms']:.1f} ms")
+        if verbose:
+            status_icon = "✓" if backend_result.get('has_real_metrics') else "~"
+            print(f"  {COLOR_SUCCESS}{status_icon} Respuesta recibida en {backend_result['total_time_ms']:.1f} ms{COLOR_RESET}\n")
+            
+            if backend_result.get('has_real_metrics'):
+                print(f"  📊 Métricas REALES desde backend:")
+            else:
+                print(f"  📊 Métricas estimadas:")
+            
+            print(f"     1. Transcripción (Whisper):  {backend_result['stt_time_ms']:.1f} ms")
+            print(f"        → '{backend_result['transcription'][:60]}'")
+            print(f"     2. Respuesta LLM (Genialle): {backend_result['llm_time_ms']:.1f} ms")
+            print(f"     3. Síntesis TTS (gTTS):      {backend_result['tts_time_ms']:.1f} ms")
+            
+            if backend_result.get('network_overhead_ms', 0) > 0:
+                print(f"     4. Overhead de red:          {backend_result['network_overhead_ms']:.1f} ms")
+            
+            print(f"  ────────────────────────────────")
+            print(f"  ⏱  TIEMPO TOTAL: {backend_result['total_time_ms']:.1f} ms ({backend_result['total_time_ms']/1000:.2f} s)\n")
         
         results.append({
             "iteration": iteration,
             "timestamp": datetime.now().isoformat(),
+            "success": True,
             "total_client_time_ms": round(backend_result['total_time_ms'], 2),
             "total_backend_time_ms": round(backend_result.get('total_backend_ms', 0), 2),
             "stt_whisper_time_ms": round(backend_result['stt_time_ms'], 2),
             "llm_genialle_time_ms": round(backend_result['llm_time_ms'], 2),
             "tts_gtts_time_ms": round(backend_result['tts_time_ms'], 2),
-            "transcription": backend_result['transcription'][:100]
+            "network_overhead_ms": round(backend_result.get('network_overhead_ms', 0), 2),
+            "transcription": backend_result['transcription'][:100],
+            "audio_file": audio_info['name'],
+            "has_real_metrics": backend_result.get('has_real_metrics', False)
         })
     
-    print(f"\n{'='*70}")
-    print(f"Completadas: {successful_tests}/{num_iterations}")
-    print(f"{'='*70}\n")
+    if verbose:
+        print(f"{'='*70}")
+        print(f"Pruebas completadas: {COLOR_SUCCESS}{successful_tests} exitosas{COLOR_RESET}, {COLOR_ERROR}{failed_tests} fallidas{COLOR_RESET}")
+        print(f"{'='*70}\n")
     
     return results
 
 
 def save_results(results, filename=None):
-    """Guarda resultados en CSV"""
+    """Guarda resultados en CSV y muestra estadísticas"""
     if not results:
+        print(f"{COLOR_ERROR}❌ No hay resultados para guardar{COLOR_RESET}")
         return
     
     filename = filename or RESULTS_FILE
     
-    with open(filename, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=results[0].keys())
-        writer.writeheader()
-        writer.writerows(results)
+    # Filtrar resultados exitosos
+    successful = [r for r in results if r.get('success', True) and 'total_backend_time_ms' in r]
     
-    print(f"✓ Guardado en: {filename}\n")
+    try:
+        with open(filename, 'w', newline='', encoding='utf-8') as f:
+            if successful:
+                writer = csv.DictWriter(f, fieldnames=successful[0].keys())
+            else:
+                writer = csv.DictWriter(f, fieldnames=results[0].keys())
+            writer.writeheader()
+            writer.writerows(results)
+        
+        print(f"{COLOR_SUCCESS}✓ Resultados guardados en: {filename.resolve()}{COLOR_RESET}\n")
+    except Exception as e:
+        print(f"{COLOR_ERROR}❌ Error al guardar CSV: {e}{COLOR_RESET}\n")
+        return
     
-    # Estadísticas
-    totals = [r['total_backend_time_ms'] for r in results if r.get('total_backend_time_ms', 0) > 0]
-    if totals:
-        print(f"Estadísticas:")
-        print(f"  Promedio: {np.mean(totals):.2f} ms")
-        print(f"  Rango:    {np.min(totals):.2f} - {np.max(totals):.2f} ms\n")
+    if not successful:
+        print(f"{COLOR_ERROR}❌ No hay resultados exitosos para analizar{COLOR_RESET}")
+        return
+    
+    # Estadísticas detalladas
+    print(f"{'='*70}")
+    print(f"RESUMEN DE ESTADÍSTICAS ({len(successful)} pruebas exitosas)")
+    
+    has_real_metrics = any(r.get('has_real_metrics', False) for r in successful)
+    if has_real_metrics:
+        print(f"{COLOR_SUCCESS}✓ Usando MÉTRICAS REALES desde server.js{COLOR_RESET}")
+    else:
+        print(f"{COLOR_INFO}⚠ Usando estimaciones (actualiza server.js para métricas reales){COLOR_RESET}")
+    
+    print(f"{'='*70}\n")
+    
+    # Calcular estadísticas
+    metrics = {
+        'total_backend_time_ms': 'TIEMPO TOTAL BACKEND (Whisper + Genialle + TTS)',
+        'total_client_time_ms': 'TIEMPO TOTAL CLIENTE (incluyendo red)',
+        'stt_whisper_time_ms': 'TRANSCRIPCIÓN (Whisper)',
+        'llm_genialle_time_ms': 'RESPUESTA LLM (Genialle)',
+        'tts_gtts_time_ms': 'SÍNTESIS TTS (gTTS)',
+        'network_overhead_ms': 'OVERHEAD DE RED'
+    }
+    
+    for key, label in metrics.items():
+        values = [r[key] for r in successful if key in r and r[key] > 0]
+        if values:
+            print(f"{label}:")
+            print(f"  Promedio:  {np.mean(values):.2f} ms")
+            print(f"  Mediana:   {np.median(values):.2f} ms")
+            print(f"  Mínimo:    {np.min(values):.2f} ms")
+            print(f"  Máximo:    {np.max(values):.2f} ms")
+            print(f"  Desv. Est: {np.std(values):.2f} ms\n")
+    
+    # Mostrar transcripciones únicas
+    transcriptions = set([r['transcription'] for r in successful if r.get('transcription')])
+    if transcriptions:
+        print(f"Transcripciones obtenidas:")
+        for i, trans in enumerate(transcriptions, 1):
+            print(f"  {i}. '{trans}'")
+        print()
+    
+    print(f"{'='*70}\n")
 
 
 def main():
     import argparse
     
-    parser = argparse.ArgumentParser(description="Pruebas de rendimiento backend")
-    parser.add_argument("-n", "--num-tests", type=int, default=10)
-    parser.add_argument("-b", "--backend-url", type=str, default="http://localhost:3000")
-    parser.add_argument("-o", "--output", type=str, default=None)
+    parser = argparse.ArgumentParser(
+        description="Pruebas de rendimiento REAL contra backend server.js (Whisper + Genialle + TTS)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Ejemplos de uso:
+  python test_real_backend.py -n 10
+  python test_real_backend.py -n 5 --backend-url https://tu-ngrok.ngrok-free.dev
+  python test_real_backend.py -n 20 --output results_20250107.csv --quiet
+
+Requisitos previos:
+  1. Backend ejecutándose: cd backend && docker-compose up
+  2. Archivos de audio en backend/uploads/entrada_*.wav
+  3. Dependencias instaladas: pip install -r requirements.txt
+        """
+    )
+    parser.add_argument(
+        "-n", "--num-tests",
+        type=int,
+        default=10,
+        help="Número de iteraciones de prueba (default: 10)"
+    )
+    parser.add_argument(
+        "-b", "--backend-url",
+        type=str,
+        default="http://localhost:3000",
+        help="URL del backend (default: http://localhost:3000)"
+    )
+    parser.add_argument(
+        "-o", "--output",
+        type=str,
+        default=None,
+        help="Archivo de salida CSV (default: performance_results_real_backend.csv)"
+    )
+    parser.add_argument(
+        "-q", "--quiet",
+        action="store_true",
+        help="Modo silencioso (sin output detallado)"
+    )
     
     args = parser.parse_args()
     
-    results = run_real_backend_test(args.num_tests, args.backend_url)
+    if not args.quiet:
+        print("\n╔════════════════════════════════════════════════════════════════════╗")
+        print("║  PRUEBAS DE RENDIMIENTO REAL - Backend server.js                  ║")
+        print("║  Whisper (STT) + Genialle (LLM) + gTTS (TTS)                      ║")
+        print("╚════════════════════════════════════════════════════════════════════╝")
+    
+    results = run_real_backend_test(args.num_tests, args.backend_url, verbose=not args.quiet)
+    
     if results:
         save_results(results, args.output)
+    else:
+        print(f"\n{COLOR_ERROR}❌ No se pudieron ejecutar las pruebas. Verifica:{COLOR_RESET}")
+        print("   1. Backend ejecutándose: cd backend && docker-compose up")
+        print("   2. URL correcta del backend")
+        print("   3. Archivos de audio en backend/uploads/entrada_*.wav\n")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
